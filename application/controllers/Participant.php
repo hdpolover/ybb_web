@@ -386,6 +386,43 @@ class Participant extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function sorted()
+    {
+        $data['title'] = 'Fully Funded Participants';
+        $data['current_admin'] = $this->db->get_where('admins', ['username' => $this->session->userdata('username')])->row_array();
+        $data['participants'] = $this->participant->getSortedParticipant();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('participant/sorted', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_sorted($id)
+    {
+        // code...
+        $data['title'] = 'Detail Peserta';
+        $data['current_admin'] = $this->db->get_where('admins', ['username' => $this->session->userdata('username')])->row_array();
+        $data['participants'] = $this->participant->get_participant_detail($id);
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('participant/detail_sorted', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function detail_sorted_ajax($id)
+    {
+        // code...
+        $data['title'] = 'Detail Peserta';
+        $data['current_admin'] = $this->db->get_where('admins', ['username' => $this->session->userdata('username')])->row_array();
+        $data['participants'] = $this->participant->get_participant_detail($id);
+
+        $this->load->view('participant/detail_sorted', $data);
+    }
+
     public function tambah_full()
     {
         $data['title'] = 'Fully Funded Participants';

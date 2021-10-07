@@ -40,7 +40,7 @@ aria-hidden="true">
 </div>
 
 <!-- Bootstrap core JavaScript-->
-<script src="<?= base_url('assets/');?>vendor/jquery/jquery.min.js"></script>
+
 <script src="<?= base_url('assets/');?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -55,6 +55,23 @@ aria-hidden="true">
 
 <!-- Page level custom scripts -->
 <script src="<?= base_url('assets/');?>js/demo/datatables-demo.js"></script>
+
+<!-- <script>
+  $(document).ready(function() {
+    $('.showDetails').on('click', function() {
+      var id = $(this).attr('id');
+      console.log(id);
+      $("#detailsP").html(`<center class="mt-lg-10 my-auto mx-lg-10"><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Loading...</center>`);
+      jQuery.ajax({
+        url: "<?= base_url('participant/detail_sorted_ajax/') ?>" + id,
+        type: "GET",
+        success: function(data) {
+          $("#detailsP").html(data);
+        }
+      });
+    });
+  });
+</script> -->
 
 </body>
 

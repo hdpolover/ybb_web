@@ -195,4 +195,15 @@ class Participant_model extends CI_Model
     $this->db->update('participants', ['is_fully_funded' => 1], ['id_participant' => $id]);
     return $this->db->affected_rows();
   }
+
+  public function getSortedParticipant()
+  {
+    // code...
+    $query = "SELECT `participant_details`.*, `participants`.*, `summits`.`description`
+                FROM `participant_details` LEFT JOIN `participants` ON `participant_details`.`id_participant` = `participants`.`id_participant`
+                LEFT JOIN `summits` ON `participants`.`id_summit` = `summits`.`id_summit`
+                ORDER BY participant_details.full_name ASC";
+
+    return $this->db->query($query)->result_array();
+  }
 }

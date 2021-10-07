@@ -69,6 +69,7 @@
         <!-- <a class="collapse-item" href="cards.html">Valid Participants</a> -->
 
         <a <?= $this->uri->segment(2) == 'full' ? 'class="collapse-item active"' : 'class="collapse-item"'; ?> href="<?= base_url('participant/full'); ?>">Fully Funded Participants</a>
+        <a <?= $this->uri->segment(2) == 'sorted' ? 'class="collapse-item active"' : 'class="collapse-item"'; ?> href="<?= base_url('participant/sorted'); ?>">Sorted Participants</a>
 
       </div>
 
