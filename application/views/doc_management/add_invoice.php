@@ -28,6 +28,7 @@
                         <select class="form-control" id="type" name="type">
                             <option value="1">Batch 1</option>
                             <option value="2">Batch 2</option>
+                            <option value="3">Full Payment</option>
                         </select>
                     </div>
                 </div>

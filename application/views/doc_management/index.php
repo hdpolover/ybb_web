@@ -97,22 +97,7 @@
             </a>
         </div>
         <div class="col">
-            <a href="<?= base_url(); ?>doc_management/create_loa_by_email/">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Registered Participants</div><!-- Peserta  yang udah bayar uang pendaftaran-->
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">Create Letter of Agreement (LoA) by Email</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-user fa-2x text-gray-300"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </a>
+           
         </div>
     </div>
 
