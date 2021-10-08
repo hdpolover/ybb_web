@@ -156,7 +156,6 @@ class Payment extends CI_Controller
             $this->participant->update_participant_status($data, $id_participant);
 
 
-
             $this->session->set_flashdata('message', '<div class ="alert alert-success" style="text-align-center" role ="alert"> Payment validation success!</div>');
 
             redirect('payment/index');
@@ -167,19 +166,39 @@ class Payment extends CI_Controller
         }
     }
 
+    function initials($str) {
+        $first_name = explode(' ', trim($str))[0];
+        $rest_name = preg_replace("/^(\w+\s)/", "", $str);
+        $ret = '';
+
+        foreach (explode(' ', $rest_name) as $word)
+            $ret .= strtoupper($word[0]);
+        
+        $name = $first_name . " " . $ret;
+        return $name;
+    }
+
     function generate_invoice($email, $type, $nationality)
     {
         $res = $this->doc_management->get_data_by_email($email);
 
-        $full_name = $res[0]['full_name'];
+        $full_name = strtoupper($res[0]['full_name']);
+        $formatted_name = $this->initials($full_name);
+
         $currentDate = new DateTime();
-        $d = $currentDate->format('M d, Y');
+        $d = $currentDate->format('M d, Y');        
 
         $query = "SELECT number from invoices";
         $res = $this->db->query($query)->result_array();
         $inv_number = 'IYS/PF/' . $type . '/' . $res[0]['number'];
 
-        $file_name = strtoupper(str_replace(' ', '_', trim($full_name))) . "_INVOICE_BATCH_" . $type . "_" . $nationality . ".jpg";
+        $file_name = str_replace(' ', '_', trim($full_name)) . "_INVOICE_BATCH_" . $type . "_" . $nationality . ".jpg";
+
+        $query = "SELECT number from invoices";
+        $res = $this->db->query($query)->result_array();
+        $inv_number = 'IYS/PF/' . $type . '/' . $res[0]['number'];
+
+        $file_name = str_replace(' ', '_', trim($full_name)) . "_INVOICE_BATCH_" . $type . "_" . $nationality . ".jpg";
 
         //update invoice number
         $n = $res[0]['number'] + 1;
@@ -204,7 +223,7 @@ class Payment extends CI_Controller
                     )
                 )
                 ->text(
-                    $full_name,
+                    $formatted_name,
                     array(
                         'fontFile' => realpath('font.ttf'),
                         'size' => 25,
@@ -883,7 +902,7 @@ class Payment extends CI_Controller
             $mail->MsgHTML($body);
 
 
-            
+
             $mail->send();
 
             //   echo 'Message has been sent';

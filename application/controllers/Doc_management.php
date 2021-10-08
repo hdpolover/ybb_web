@@ -246,19 +246,33 @@ class Doc_management extends CI_Controller
         redirect('doc_management');
     }
 
+    function initials($str) {
+        $first_name = explode(' ', trim($str))[0];
+        $rest_name = preg_replace("/^(\w+\s)/", "", $str);
+        $ret = '';
+
+        foreach (explode(' ', $rest_name) as $word)
+            $ret = $ret . strtoupper($word[0]) . ".";
+        
+        $name = $first_name . " " . $ret;
+        return $name;
+    }
+
     function generate_invoice($email, $type, $nationality)
     {
         $res = $this->doc_management->get_data_by_email($email);
 
-        $full_name = $res[0]['full_name'];
+        $full_name = strtoupper($res[0]['full_name']);
+        $formatted_name = $this->initials($full_name);
+
         $currentDate = new DateTime();
-        $d = $currentDate->format('M d, Y');
+        $d = $currentDate->format('M d, Y');        
 
         $query = "SELECT number from invoices";
         $res = $this->db->query($query)->result_array();
         $inv_number = 'IYS/PF/' . $type . '/' . $res[0]['number'];
 
-        $file_name = strtoupper(str_replace(' ', '_', trim($full_name))) . "_INVOICE_BATCH_" . $type . "_" . $nationality . ".jpg";
+        $file_name = str_replace(' ', '_', trim($full_name)) . "_INVOICE_BATCH_" . $type . "_" . $nationality . ".jpg";
 
         //update invoice number
         $n = $res[0]['number'] + 1;
@@ -283,11 +297,12 @@ class Doc_management extends CI_Controller
                     )
                 )
                 ->text(
-                    $full_name,
+                    $formatted_name,
                     array(
                         'fontFile' => realpath('font.ttf'),
-                        'size' => 25,
-                        'xOffset' => 90,
+                        'size' => 22,
+                        'anchor' => 'center',
+                        'xOffset' => 120,
                         'yOffset' => -320,
                     )
                 )
